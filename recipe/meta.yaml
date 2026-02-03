@@ -1,5 +1,5 @@
 {% set name = "conpty" %}
-{% set version = "<PLEASE ADD PKG VERSION>" %}
+{% set version = "1.23.20211.0" %}
 
 package:
   name: {{ name|lower }}
