@@ -1,4 +1,4 @@
-{% set name = "<PLEASE ADD PKG NAME>" %}
+{% set name = "conpty" %}
 {% set version = "<PLEASE ADD PKG VERSION>" %}
 
 package:
