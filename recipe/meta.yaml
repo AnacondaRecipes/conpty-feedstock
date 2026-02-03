@@ -15,6 +15,7 @@ build:
   skip: true  # [not win]
 
 requirements:
+  build:
   host:
     - python
     - pip
@@ -30,15 +31,7 @@ test:
     - pip check
 
 about:
-  home: <PLEASE ADD HOME URL>
-  summary: <PLEASE ADD SUMMARY>
-  description: |
-    <PLEASE ADD DESCRIPTION>
-  license: <PLEASE ADD LICENSE>
-  license_family: <PLEASE ADD LICENSE_FAMILY>
-  license_file: <PLEASE_ADD_LICENSE_FILE>
-  dev_url: <PLEASE ADD DEV URL>
-  doc_url: <PLEASE ADD DOC URL>
+  home: https://github.com/microsoft/terminal/tree/main/src/winconpty
 
 extra:
   recipe-maintainers:
