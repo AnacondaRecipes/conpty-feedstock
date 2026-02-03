@@ -32,6 +32,7 @@ test:
 
 about:
   home: https://github.com/microsoft/terminal/tree/main/src/winconpty
+  summary: Windows Pseudo Console (ConPTY)
 
 extra:
   recipe-maintainers:
