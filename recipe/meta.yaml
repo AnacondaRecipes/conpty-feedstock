@@ -36,6 +36,7 @@ about:
   description: Windows Pseudo Console (ConPTY)
   license: MIT
   license_family: MIT
+  license_file: LICENSE
 
 extra:
   recipe-maintainers:
