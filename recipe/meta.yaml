@@ -24,7 +24,6 @@ requirements:
 
 test:
   imports:
-    - {{ name.replace('-', '.') }}
   requires:
     - pip
   commands:
