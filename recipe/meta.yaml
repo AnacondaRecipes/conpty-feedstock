@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/microsoft/terminal/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: <sha256>
+  sha256: 9d120d95140f98537989143b124760fe83fdcf5bb7148c28a9894b2c88348eab
 
 build:
   number: 0
