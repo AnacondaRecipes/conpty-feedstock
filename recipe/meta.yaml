@@ -12,7 +12,7 @@ source:
 build:
   number: 0
   script: 
-    - msbuild src\winconpty\lib\winconptylib.vcxproj /p:SolutionDir=%SRC_DIR%\
+    - msbuild src\winconpty\lib\winconptylib.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:EnsureNuGetPackageBuildImports=false
   skip: true  # [not win]
 
 requirements:
