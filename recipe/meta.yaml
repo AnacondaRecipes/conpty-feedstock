@@ -11,7 +11,9 @@ source:
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  script: 
+    - cd src/winconpty/lib
+    - msbuild winconptylib.vcxproj
   skip: true  # [not win]
 
 requirements:
