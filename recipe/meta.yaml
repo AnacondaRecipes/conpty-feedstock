@@ -12,8 +12,7 @@ source:
 build:
   number: 0
   script: 
-    - cd src/winconpty/lib
-    - msbuild winconptylib.vcxproj
+    - msbuild src\winconpty\lib\winconptylib.vcxproj
   skip: true  # [not win]
 
 requirements:
