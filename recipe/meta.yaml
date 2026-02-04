@@ -17,7 +17,7 @@ build:
   number: 0
   script: 
     - powershell -Command "(Get-Content '%SRC_DIR%\\src\\common.nugetversions.targets') -replace 'Terminal_EnsureNuGetPackageBuildImports', 'Terminal_EnsureNuGetPackageBuildImports_DISABLED' | Set-Content '%SRC_DIR%\\src\\common.nugetversions.targets'"
-    - msbuild src\winconpty\lib\winconptylib.vcxproj /p:SolutionDir=%SRC_DIR%\
+    - msbuild src\winconpty\lib\winconptylib.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=x64
     #- msbuild src\winconpty\lib\winconptylib.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:RestorePackages=false /p:EnableSourceControlManagerQueries=false /p:EnableSourceLink=false /p:GitBranch=main /p:GitBaseVersionNumber={{ version }}
   skip: true  # [not win]
 
