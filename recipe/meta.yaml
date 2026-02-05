@@ -25,6 +25,7 @@ build:
     - copy %SRC_DIR%\bin\x64\Release\conpty.lib %LIBRARY_LIB%\
     - mkdir %LIBRARY_INC%\conpty
     - copy %SRC_DIR%\src\winconpty\inc\conpty.h %LIBRARY_INC%\conpty\
+    - dumpbin /exports %SRC_DIR%\bin\x64\Release\conpty.dll
   skip: true  # [not win]
 
 requirements:
