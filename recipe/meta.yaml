@@ -41,7 +41,7 @@ test:
 about:
   home: https://github.com/microsoft/terminal/tree/main/src/winconpty
   summary: Windows Pseudo Console (ConPTY)
-  description: Windows Pseudo Console (ConPTY)
+  description: Windows Pseudo Console (ConPTY) library. Headers are provided by the Windows SDK (include 'consoleapi.h' to use).
   license: MIT
   license_family: MIT
   license_file: LICENSE
