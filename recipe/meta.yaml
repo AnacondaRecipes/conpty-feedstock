@@ -8,10 +8,10 @@ package:
 source:
   - url: https://github.com/microsoft/terminal/archive/refs/tags/v{{ version }}.tar.gz
     sha256: 9d120d95140f98537989143b124760fe83fdcf5bb7148c28a9894b2c88348eab
-  - url: https://www.nuget.org/api/v2/package/Microsoft.Windows.ImplementationLibrary/1.0.240122.1
-    fn: wil.zip
-    sha256: 2762643e7865c42ac60d809fe951a813ae10960141e56bb74ad28843f2d6b5c1
-    folder: packages/Microsoft.Windows.ImplementationLibrary.1.0.240122.1
+  #- url: https://www.nuget.org/api/v2/package/Microsoft.Windows.ImplementationLibrary/1.0.240122.1
+  #  fn: wil.zip
+  #  sha256: 2762643e7865c42ac60d809fe951a813ae10960141e56bb74ad28843f2d6b5c1
+  #  folder: packages/Microsoft.Windows.ImplementationLibrary.1.0.240122.1
 
 build:
   number: 0
