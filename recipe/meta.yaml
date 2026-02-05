@@ -38,11 +38,10 @@ requirements:
   run:
 
 test:
-  imports:
   requires:
-    - pip
   commands:
-    - pip check
+    - if not exist %LIBRARY_BIN%\conpty.dll exit 1
+    - if not exist %LIBRARY_LIB%\conpty.lib exit 1
 
 about:
   home: https://github.com/microsoft/terminal/tree/main/src/winconpty
