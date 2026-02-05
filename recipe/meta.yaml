@@ -17,9 +17,14 @@ build:
   number: 0
   script: 
     #- powershell -Command "(Get-Content '%SRC_DIR%\\src\\common.nugetversions.targets') -replace 'Terminal_EnsureNuGetPackageBuildImports', 'Terminal_EnsureNuGetPackageBuildImports_DISABLED' | Set-Content '%SRC_DIR%\\src\\common.nugetversions.targets'"
-    - msbuild src\winconpty\dll\winconptydll.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=x64
     #- msbuild src\winconpty\lib\winconptylib.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=x64
     #- msbuild src\winconpty\lib\winconptylib.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:RestorePackages=false /p:EnableSourceControlManagerQueries=false /p:EnableSourceLink=false /p:GitBranch=main /p:GitBaseVersionNumber={{ version }}
+
+    - msbuild src\winconpty\dll\winconptydll.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=x64
+    - copy %SRC_DIR%\bin\x64\Release\conpty.dll %LIBRARY_BIN%\
+    - copy %SRC_DIR%\bin\x64\Release\conpty.lib %LIBRARY_LIB%\
+    - mkdir %LIBRARY_INC%\conpty
+    - copy %SRC_DIR%\src\winconpty\inc\conpty.h %LIBRARY_INC%\conpty\
   skip: true  # [not win]
 
 requirements:
