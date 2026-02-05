@@ -33,12 +33,9 @@ build:
 
 requirements:
   build:
-    #- git
+    - {{ compiler('cxx') }}
   host:
-    - python
-    - pip
   run:
-    - python
 
 test:
   imports:
