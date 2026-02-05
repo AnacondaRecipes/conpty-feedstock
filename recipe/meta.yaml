@@ -31,6 +31,8 @@ requirements:
   run:
 
 test:
+  files:
+    - test_conpty.py
   requires:
     - python
   commands:
