@@ -23,9 +23,9 @@ build:
     - msbuild src\winconpty\dll\winconptydll.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=x64
     - copy %SRC_DIR%\bin\x64\Release\conpty.dll %LIBRARY_BIN%\
     - copy %SRC_DIR%\bin\x64\Release\conpty.lib %LIBRARY_LIB%\
-    - mkdir %LIBRARY_INC%\conpty
-    - copy %SRC_DIR%\src\winconpty\inc\conpty.h %LIBRARY_INC%\conpty\
-    - dumpbin /exports %SRC_DIR%\bin\x64\Release\conpty.dll
+    #- mkdir %LIBRARY_INC%\conpty
+    #- copy %SRC_DIR%\src\winconpty\inc\conpty.h %LIBRARY_INC%\conpty\
+    #- dumpbin /exports %SRC_DIR%\bin\x64\Release\conpty.dll
   skip: true  # [not win]
 
 requirements:
