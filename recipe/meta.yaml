@@ -1,45 +1,56 @@
-{% set name = "<PLEASE ADD PKG NAME>" %}
-{% set version = "<PLEASE ADD PKG VERSION>" %}
+{% set name = "conpty" %}
+{% set version = "1.23.20211.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: <sha256>
+  - url: https://github.com/microsoft/terminal/archive/refs/tags/v{{ version }}.tar.gz
+    sha256: 9d120d95140f98537989143b124760fe83fdcf5bb7148c28a9894b2c88348eab
+  - url: https://www.nuget.org/api/v2/package/Microsoft.Windows.ImplementationLibrary/1.0.240122.1
+    fn: wil.zip
+    sha256: 2762643e7865c42ac60d809fe951a813ae10960141e56bb74ad28843f2d6b5c1
+    folder: packages/Microsoft.Windows.ImplementationLibrary.1.0.240122.1
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: True  # [py<38]
+  script:
+    - msbuild src\winconpty\dll\winconptydll.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=x64 || exit /b 1
+    - copy %SRC_DIR%\bin\x64\Release\conpty.dll %LIBRARY_BIN%\ || exit /b 1
+    - copy %SRC_DIR%\bin\x64\Release\conpty.lib %LIBRARY_LIB%\ || exit /b 1
+    # Headers are part of the Windows SDK (consoleapi.h)
+  skip: true  # [not win]
+  missing_dso_whitelist:
+    - "*/api-ms-win-*.dll"
 
 requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - {{ stdlib('c') }}
   host:
-    - python
-    - pip
   run:
-    - python
 
 test:
-  imports:
-    - {{ name.replace('-', '.') }}
+  files:
+    - test_conpty.py
   requires:
-    - pip
+    - python
   commands:
-    - pip check
+    - if not exist %LIBRARY_BIN%\conpty.dll exit 1
+    - if not exist %LIBRARY_LIB%\conpty.lib exit 1
+    - python test_conpty.py
 
 about:
-  home: <PLEASE ADD HOME URL>
-  summary: <PLEASE ADD SUMMARY>
-  description: |
-    <PLEASE ADD DESCRIPTION>
-  license: <PLEASE ADD LICENSE>
-  license_family: <PLEASE ADD LICENSE_FAMILY>
-  license_file: <PLEASE_ADD_LICENSE_FILE>
-  dev_url: <PLEASE ADD DEV URL>
-  doc_url: <PLEASE ADD DOC URL>
+  home: https://github.com/microsoft/terminal/tree/main/src/winconpty
+  summary: Windows Pseudo Console (ConPTY)
+  description: Windows Pseudo Console (ConPTY) library. Headers are provided by the Windows SDK (include 'consoleapi.h' to use).
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  dev_url: https://github.com/microsoft/terminal/tree/main/src/winconpty
+  doc_url: https://learn.microsoft.com/en-us/windows/console/creating-a-pseudoconsole-session
 
 extra:
   recipe-maintainers:
-    - Jrice1317
+    - TS-ANC
