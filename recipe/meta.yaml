@@ -38,7 +38,7 @@ test:
   commands:
     - if not exist %LIBRARY_BIN%\conpty.dll exit 1
     - if not exist %LIBRARY_LIB%\conpty.lib exit 1
-    #- test_conpty.py
+    - python test_conpty.py
 
 about:
   home: https://github.com/microsoft/terminal/tree/main/src/winconpty
