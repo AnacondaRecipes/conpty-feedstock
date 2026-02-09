@@ -14,7 +14,7 @@ source:
     folder: packages/Microsoft.Windows.ImplementationLibrary.1.0.240122.1
 
 build:
-  number: 0
+  number: 1
   script:
     - msbuild src\winconpty\dll\winconptydll.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=x64 || exit /b 1
     - copy %SRC_DIR%\bin\x64\Release\conpty.dll %LIBRARY_BIN%\ || exit /b 1
