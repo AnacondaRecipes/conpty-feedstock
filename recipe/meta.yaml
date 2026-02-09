@@ -20,6 +20,8 @@ build:
     - msbuild src\winconpty\dll\winconptydll.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=x64 || exit /b 1
     - copy %SRC_DIR%\bin\x64\Release\conpty.lib %LIBRARY_LIB%\ || exit /b 1
     - copy %SRC_DIR%\bin\x64\Release\conpty.dll %LIBRARY_BIN%\ || exit /b 1
+    - echo "DIR CONTENTS:"
+    - dir %SRC_DIR%\bin\x64\Release\
     # Copy the optional OpenConsole.exe binary. While the DLL can use conhost.exe fallback (present on modern
     # Windows versions), some depending packages explicitly search for 'OpenConsole.exe' in their build process.
     - copy %SRC_DIR%\bin\x64\Release\OpenConsole.exe %LIBRARY_BIN%\ || exit /b 1
