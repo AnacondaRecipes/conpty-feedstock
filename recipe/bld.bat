@@ -1,7 +1,13 @@
-if /I "%ARCH%" == "arm64" (
-  set MSVC_PLATFORM=ARM64
+echo ARCH=%ARCH%
+
+if /I "%ARCH%" == "32" (
+  set ARCH=Win32
 ) else (
-  set MSVC_PLATFORM=x64
+  if /I "%ARCH%" == "arm64" (
+    set ARCH=ARM64
+  ) else (
+    set ARCH=x64
+  )
 )
 
 :: Build ConPTY
