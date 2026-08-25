@@ -1,4 +1,4 @@
-echo ARCH=%ARCH%
+@echo on
 
 if /I "%ARCH%" == "32" (
   set ARCH=Win32
@@ -9,6 +9,7 @@ if /I "%ARCH%" == "32" (
     set ARCH=x64
   )
 )
+echo ARCH=%ARCH%
 
 :: Build ConPTY
 msbuild src\winconpty\dll\winconptydll.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=%MSVC_PLATFORM% /p:WindowsTargetPlatformVersion=10.0
