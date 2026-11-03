@@ -1,5 +1,5 @@
 {% set name = "conpty" %}
-{% set version = "1.23.20211.0" %}
+{% set version = "1.26.2734.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,15 +7,15 @@ package:
 
 source:
   - url: https://github.com/microsoft/terminal/archive/refs/tags/v{{ version }}.tar.gz
-    sha256: 9d120d95140f98537989143b124760fe83fdcf5bb7148c28a9894b2c88348eab
-    # MSBuild will attempt to use NuGet to pull in WIL dependency, avoid it by manually downloading the artifact.
+    sha256: cc57cf67d0457ddc6f44ce3c0260fda6955ea0db875a627f919d0609a87d2582
+  # MSBuild will attempt to use NuGet to pull in WIL dependency, avoid it by manually downloading the artifact.
   - url: https://www.nuget.org/api/v2/package/Microsoft.Windows.ImplementationLibrary/1.0.240122.1
     fn: wil.zip
     sha256: 2762643e7865c42ac60d809fe951a813ae10960141e56bb74ad28843f2d6b5c1
     folder: packages/Microsoft.Windows.ImplementationLibrary.1.0.240122.1
 
 build:
-  number: 2
+  number: 0
   script:
     # Build ConPTY
     - msbuild src\winconpty\dll\winconptydll.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=x64 /p:WindowsTargetPlatformVersion=10.0  # [win and x86_64]
@@ -37,7 +37,7 @@ build:
     - copy %SRC_DIR%\bin\x64\Release\OpenConsole.exe %LIBRARY_BIN%\  # [win and x86_64]
     - copy %SRC_DIR%\bin\ARM64\Release\OpenConsole.exe %LIBRARY_BIN%\  # [win and arm64]
     - if errorlevel 1 exit /b 1
-    # Headers are part of the Windows SDK (consoleapi.h)
+  # Headers are part of the Windows SDK (consoleapi.h)
   skip: true  # [not win]
   missing_dso_whitelist:
     - "*/api-ms-win-*.dll"
