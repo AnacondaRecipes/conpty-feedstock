@@ -1,29 +1,38 @@
 {% set name = "conpty" %}
-{% set version = "1.23.20211.0" %}
+{% set version = "1.26.3133.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   - url: https://github.com/microsoft/terminal/archive/refs/tags/v{{ version }}.tar.gz
-    sha256: 9d120d95140f98537989143b124760fe83fdcf5bb7148c28a9894b2c88348eab
+    sha256: dfdb888546e24c02d67d0312ad4c9139c08a92d27fc9830e6eda2d0cc697aca5
     # MSBuild will attempt to use NuGet to pull in WIL dependency, avoid it by manually downloading the artifact.
-  - url: https://www.nuget.org/api/v2/package/Microsoft.Windows.ImplementationLibrary/1.0.240122.1
+    # https://github.com/microsoft/terminal/blob/c4e28e32c0c868474340eb4ae415096aab9026d7/src/common.nugetversions.targets#L65
+  - url: https://www.nuget.org/api/v2/package/Microsoft.Windows.ImplementationLibrary/1.0.250325.1
     fn: wil.zip
-    sha256: 2762643e7865c42ac60d809fe951a813ae10960141e56bb74ad28843f2d6b5c1
-    folder: packages/Microsoft.Windows.ImplementationLibrary.1.0.240122.1
+    sha256: b3e3ac9077c4f5f96bd8f90785bcae47bac6ba9688d896cd04422c8972ec5b2b
+    folder: packages/Microsoft.Windows.ImplementationLibrary.1.0.250325.1
+  - url: https://github.com/microsoft/GSL/archive/refs/tags/v4.2.2.tar.gz
+    sha256: 59e2a0a0ea22e8bcf9db2dc4d4bd21212ac6595748295fc27a7e02cf75eac4b5
+    folder: packages/gsl
 
 build:
-  number: 2
+  number: 0
   script:
+    - del vcpkg.json
+    - set VcpkgEnabled=false
+    - set "CL=/I%SRC_DIR%\packages\gsl\include /D FMT_HEADER_ONLY /I%LIBRARY_INC% %CL%"
+    #- set "_LINK_=/LIBPATH:%LIBRARY_LIB%" fmt.lib %_LINK_%""
+    #- set "LINK=/LIBPATH:%LIBRARY_LIB%" fmt.lib %LINK%""
     # Build ConPTY
-    - msbuild src\winconpty\dll\winconptydll.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=x64 /p:WindowsTargetPlatformVersion=10.0  # [win and x86_64]
-    - msbuild src\winconpty\dll\winconptydll.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=ARM64 /p:WindowsTargetPlatformVersion=10.0  # [win and arm64]
+    - msbuild src\winconpty\dll\winconptydll.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=x64 /p:WindowsTargetPlatformVersion=10.0  /p:PlatformToolset=v143 # [win and x86_64]
+    - msbuild src\winconpty\dll\winconptydll.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=ARM64 /p:WindowsTargetPlatformVersion=10.0 /p:PlatformToolset=v143 # [win and arm64]
     - if errorlevel 1 exit /b 1
     # Build OpenConsole.exe
-    - msbuild src\host\exe\Host.EXE.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=x64 /p:WindowsTargetPlatformVersion=10.0  # [win and x86_64]
-    - msbuild src\host\exe\Host.EXE.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=ARM64 /p:WindowsTargetPlatformVersion=10.0  # [win and arm64]
+    - msbuild src\host\exe\Host.EXE.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=x64 /p:WindowsTargetPlatformVersion=10.0 /p:PlatformToolset=v143 # [win and x86_64]
+    - msbuild src\host\exe\Host.EXE.vcxproj /p:SolutionDir=%SRC_DIR%\ /p:Configuration=Release /p:Platform=ARM64 /p:WindowsTargetPlatformVersion=10.0 /p:PlatformToolset=v143 # [win and arm64]
     - if errorlevel 1 exit /b 1
     # Install artifacts
     - copy %SRC_DIR%\bin\x64\Release\conpty.lib %LIBRARY_LIB%\  # [win and x86_64]
@@ -48,6 +57,7 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ stdlib('c') }}
   host:
+    - fmt >=12.1.0
   run:
 
 test:
