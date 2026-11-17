@@ -51,6 +51,8 @@ build:
   missing_dso_whitelist:
     - "*/api-ms-win-*.dll"
     - "*/ext-ms-win-uiacore-*.dll"
+  ignore_run_exports:
+    - fmt
 
 requirements:
   build:
